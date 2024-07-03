@@ -1,11 +1,20 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
-    public Text text;
+    public Text showTex;
     public NetManager netManager;
+    public InputField mesInput;
+    public Button senButton;
+    private async void SendMes()
+    {
+        string mes = mesInput.text;
+        Debug.Log(mes);
+        await netManager.udpSend.SendMsgAsync(mes);
+    }
 
     private IEnumerator ReceiveMessages()
     {
@@ -13,11 +22,11 @@ public class UiManager : MonoBehaviour
         {
             if (netManager.udpReceive.HasMessages())
             {
-                string message = netManager.udpReceive.GetNextMessage();
+                var (message, sender) = netManager.udpReceive.GetNextMessage();
+                Debug.Log(message);
                 if (message != null)
                 {
-                    // 在主线程中更新 UI 文本
-                    text.text = message;
+                    showTex.text += sender + " : " +  message + "\n";
                 }
             }
             yield return null;
@@ -26,6 +35,7 @@ public class UiManager : MonoBehaviour
 
     private void Start()
     {
+        senButton.onClick.AddListener(SendMes);
         StartCoroutine(ReceiveMessages());
     }
 }

@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
-using UnityEngine;
 
 public class UdpReceive
 {
     UdpClient udpClient;
-    int listenPort = 8888;
-    Queue<string> messageQueue = new Queue<string>();
+    int listenPort = 8803;
+    Queue<(string Message, IPEndPoint Sender)> messageQueue = new Queue<(string, IPEndPoint)>();
 
-    public UdpReceive(int listenPort = 8888)
+    public UdpReceive(int listenPort = 8803)
     {
         this.listenPort = listenPort;
         udpClient = new UdpClient(listenPort);
@@ -23,16 +22,17 @@ public class UdpReceive
         IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, listenPort);
         byte[] received = udpClient.EndReceive(ar, ref remoteEP);
         string message = Encoding.UTF8.GetString(received);
-
+        // System.Console.WriteLine(message);
         lock (messageQueue)
         {
-            messageQueue.Enqueue(message);
+            // System.Console.WriteLine(message + remoteEP);
+            messageQueue.Enqueue((message, remoteEP));
         }
 
         udpClient.BeginReceive(new AsyncCallback(ReceiveCallback), null);
     }
 
-    public string GetNextMessage()
+    public (string Message, IPEndPoint Sender) GetNextMessage()
     {
         lock (messageQueue)
         {
@@ -40,7 +40,7 @@ public class UdpReceive
             {
                 return messageQueue.Dequeue();
             }
-            return null;
+            return (null, null);
         }
     }
 
@@ -57,5 +57,3 @@ public class UdpReceive
         udpClient.Close();
     }
 }
-
-
