@@ -317,9 +317,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showTex: {fileID: 1271777649}
-  netManager: {fileID: 528707483}
   mesInput: {fileID: 1437956304}
   senButton: {fileID: 885094399}
+  connectionManager: {fileID: 528707485}
+  connectionClient: {fileID: 528707486}
 --- !u!1 &347702231
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,7 +420,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 528707484}
-  - component: {fileID: 528707483}
+  - component: {fileID: 528707486}
+  - component: {fileID: 528707485}
   m_Layer: 0
   m_Name: Net
   m_TagString: Untagged
@@ -427,18 +429,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &528707483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 528707482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18b90ab47e62ab941bd2dd9764afa5d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &528707484
 Transform:
   m_ObjectHideFlags: 0
@@ -454,6 +444,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &528707485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528707482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71edb93ece5ce9449522cd7c6ae940b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverPort: 54123
+--- !u!114 &528707486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528707482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c033f55eb424dc145a9debe94bd64724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localPort: 54124
+  serverPort: 54123
 --- !u!1 &695971441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1226,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: daf
+  m_Text: 
 --- !u!222 &1271777650
 CanvasRenderer:
   m_ObjectHideFlags: 0

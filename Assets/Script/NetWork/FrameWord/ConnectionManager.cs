@@ -28,15 +28,16 @@ public class ConnectionManager : MonoBehaviour
         string mes = Encoding.ASCII.GetString(data); // 解析中文换成UTF-8
         Debug.Log(mes);
         // TODO: 因为发送的数据不能直接在主线程中复制，现在暂时使用Queue来存储消息队列
-        messageQueue.Enqueue(mes);
+        messageQueue.Enqueue(remoteProt.ToString() + ": " + mes);
         _connect.Listen(CommandReceived, 5000);
     }
     public static string GetMessage()
     {
-        if(messageQueue.Count > 0)
+        if (messageQueue.Count > 0)
         {
             return messageQueue.Dequeue();
-        }else
+        }
+        else
         {
             return null;
         }
